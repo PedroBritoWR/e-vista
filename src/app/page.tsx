@@ -1,7 +1,7 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/input'
 
 export default function Login() {
   return (
@@ -30,22 +30,21 @@ export default function Login() {
           />
           <Link
             href="/recuperar-senha"
-            className="ml-auto inline-block text-sm underline text-end w-full"
+            className="ml-auto inline-block w-full text-end text-sm underline"
           >
             Esqueceu sua senha?
           </Link>
         </div>
-
         <Button type="submit" className="w-full">
           Entrar
         </Button>
       </div>
       <div className="mt-4 text-center text-sm">
-        Ainda não tem uma conta?{" "}
+        Ainda não tem uma conta?{' '}
         <Link href="/cadastrar-se" className="underline">
           Cadastre-se
         </Link>
       </div>
     </>
-  );
+  )
 }

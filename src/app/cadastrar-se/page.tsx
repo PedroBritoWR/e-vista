@@ -1,9 +1,7 @@
-import Link from "next/link";
+import Link from 'next/link'
 
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import LoginForm from "@/components/PasswordValidator";
-import { Input } from "@/components/input";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/input'
 
 export default function Login() {
   return (
@@ -43,17 +41,17 @@ export default function Login() {
           placeholder="*********"
           required
         />
-       
+
         <Button type="submit" className="w-full">
           Criar conta
         </Button>
       </div>
       <div className="mt-4 text-center text-sm">
-        Voltar para página{" "}
+        Voltar para{' '}
         <Link href="/" className="underline">
-          Inicial
+          Autenticação
         </Link>
       </div>
     </>
-  );
+  )
 }
