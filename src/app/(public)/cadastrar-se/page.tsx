@@ -109,7 +109,7 @@ export default function Login() {
           {...register('confirmPassword')}
           error={errors.confirmPassword && errors.confirmPassword.message}
         />
-        <div className="relative h-2 w-full rounded bg-gray-300">
+        <div className="relative h-4 w-full rounded bg-gray-300">
           <div
             className={`absolute h-full rounded ${
               handlePasswordColor().borderColor

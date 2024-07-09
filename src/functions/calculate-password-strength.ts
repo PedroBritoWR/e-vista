@@ -1,5 +1,4 @@
 export function calculatePasswordStrength(password: string) {
-  // Verifica se a senha não está vazia
   if (!password) {
     return {
       strength: '',
