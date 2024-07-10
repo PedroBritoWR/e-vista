@@ -9,7 +9,7 @@ export const itemnsSidebar: ItemSidebarProps[] = [
     active: true,
   },
   {
-    href: '#',
+    href: '/pagina-inicial/aluno',
     tooltip: 'Orders',
     icon: <ShoppingCart className="h-5 w-5" />,
   },
