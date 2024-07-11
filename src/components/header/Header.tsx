@@ -14,25 +14,9 @@ import Breadcrumb from './Breadcrumb'
 import AvatarUser from './AvatarUser'
 
 export default function Header() {
-  const hrefs = [
-    '/',
-    '/dashboard',
-    '/orders',
-    '/products',
-    '/customers',
-    '/settings',
-  ]
-  const labels = [
-    'Home',
-    'Dashboard',
-    'Orders',
-    'Products',
-    'Customers',
-    'Settings',
-  ]
-
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+    <header className="sticky top-0 flex h-12 items-center justify-between gap-4 border-b pt-2 sm:static sm:h-auto sm:border-0 sm:bg-[#0D1525] sm:px-16">
+      <Breadcrumb />
       <Sheet>
         <SheetTrigger asChild>
           <Button size="icon" variant="outline" className="sm:hidden">
@@ -87,10 +71,7 @@ export default function Header() {
           </nav>
         </SheetContent>
       </Sheet>
-
-      <Breadcrumb hrefs={hrefs} labels={labels} />
-
-      <AvatarUser src="/zedao.jpeg" alt="zedao" width={40} height={40} />
+      <AvatarUser src="/" alt="a" width={32} height={32} />
     </header>
   )
 }

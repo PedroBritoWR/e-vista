@@ -1,4 +1,5 @@
 import '@/app/styles/globals.css'
+import Header from '@/components/header/Header'
 import { Sidebar } from '@/components/sidebar'
 import ThemeProvider from '@/components/theme-provider'
 
@@ -10,6 +11,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="pt-br" suppressHydrationWarning>
       <head />
       <body>
+        <Header />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

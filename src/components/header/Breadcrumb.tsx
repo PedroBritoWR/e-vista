@@ -1,42 +1,39 @@
-// components/Breadcrumb.tsx
-
+'use client'
+import { usePathname } from 'next/navigation'
 import {
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '../ui/breadcrumb'
+import Link from 'next/link'
 
-import Link from 'next/link' // Importar o Link do next/link
+export default function Breadcrumb() {
+  const urlName = usePathname()
+  const urlNameFilter = urlName.split('/').filter(Boolean)
 
-type BreadcrumbProps = {
-  hrefs: string[]
-  labels: string[]
-}
-
-export default function Breadcrumb({ hrefs, labels }: BreadcrumbProps) {
   return (
-    <BreadcrumbEllipsis className="hidden md:flex">
-      <BreadcrumbList>
-        {hrefs.map((href, index) => (
+    <BreadcrumbList>
+      {urlNameFilter.map((breadCrumb, index) => {
+        const href = `/${urlNameFilter.slice(0, index + 1).join('/')}`
+        const last = index === urlNameFilter.length - 1
+
+        return (
           <BreadcrumbItem key={index}>
-            {index < hrefs.length - 1 ? (
+            {!last ? (
               <>
                 <BreadcrumbLink asChild>
-                  <Link href={href}>
-                    <a>{labels[index]}</a>
-                  </Link>
+                  <Link href={href}>{breadCrumb}</Link>
                 </BreadcrumbLink>
                 <BreadcrumbSeparator />
               </>
             ) : (
-              <BreadcrumbPage>{labels[index]}</BreadcrumbPage>
+              <BreadcrumbPage>{breadCrumb}</BreadcrumbPage>
             )}
           </BreadcrumbItem>
-        ))}
-      </BreadcrumbList>
-    </BreadcrumbEllipsis>
+        )
+      })}
+    </BreadcrumbList>
   )
 }

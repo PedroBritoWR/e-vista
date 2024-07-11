@@ -3,13 +3,13 @@ import { ItemSidebarProps } from './item-sidebar'
 
 export const itemnsSidebar: ItemSidebarProps[] = [
   {
-    href: '#',
-    tooltip: 'Dashboard',
+    href: '/pagina-inicial',
+    tooltip: 'pagina inicial',
     icon: <Home className="h-5 w-5" />,
     active: true,
   },
   {
-    href: '/pagina-inicial/aluno',
+    href: '#',
     tooltip: 'Orders',
     icon: <ShoppingCart className="h-5 w-5" />,
   },
@@ -19,8 +19,8 @@ export const itemnsSidebar: ItemSidebarProps[] = [
     icon: <Package className="h-5 w-5" />,
   },
   {
-    href: '#',
-    tooltip: 'Customers',
+    href: '/pagina-inicial/aluno',
+    tooltip: 'Aluno',
     icon: <Users2 className="h-5 w-5" />,
   },
 ]
