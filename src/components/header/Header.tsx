@@ -15,7 +15,7 @@ import AvatarUser from './AvatarUser'
 
 export default function Header() {
   return (
-    <header className="sticky top-0 flex h-12 items-center justify-between gap-4 border-b pt-2 sm:static sm:h-auto sm:border-0 sm:bg-[#0D1525] sm:px-16">
+    <header className="sticky top-0 ml-3 flex h-12 items-center justify-between gap-4 border-b pt-2 sm:static sm:h-auto sm:border-0 sm:bg-[#0D1525] sm:px-16">
       <Breadcrumb />
       <Sheet>
         <SheetTrigger asChild>
