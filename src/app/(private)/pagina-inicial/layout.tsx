@@ -11,13 +11,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="pt-br" suppressHydrationWarning>
       <head />
       <body>
-        <Header />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           <div className="flex w-full items-center justify-center">
             <div className="mx-auto grid w-full gap-6">
               <div className="flex min-h-screen w-full flex-col bg-muted/40">
