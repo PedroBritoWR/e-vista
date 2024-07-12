@@ -1,4 +1,4 @@
-import { Home, Users2, UserPlus, LogOut } from 'lucide-react'
+import { Home, Users2, UserPlus } from 'lucide-react'
 import { ItemSidebarProps } from './item-sidebar'
 
 export const itemnsSidebar: ItemSidebarProps[] = [
@@ -7,11 +7,6 @@ export const itemnsSidebar: ItemSidebarProps[] = [
     tooltip: 'Pagina inicial',
     icon: <Home className="h-5 w-5" />,
     active: true,
-  },
-  {
-    href: '/',
-    tooltip: 'Deslogar',
-    icon: <LogOut className="h-5 w-5" />,
   },
   {
     href: '/pagina-inicial/aluno',

@@ -47,7 +47,7 @@ export default function AvatarUser({
           <DropdownMenuItem>Configurações</DropdownMenuItem>
           <DropdownMenuItem>Suporte/Atendimento</DropdownMenuItem>
           <DropdownMenuSeparator className="border-b" />
-          <DropdownMenuItem>Deslogar</DropdownMenuItem>
+          <DropdownMenuItem>Sair</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

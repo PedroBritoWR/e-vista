@@ -30,7 +30,7 @@ export default function Header() {
               className="flex items-center gap-4 px-2.5 text-foreground"
             >
               <LogOut className="h-5 w-5" />
-              Deslogar
+              Sair
             </Link>
             <Link
               href="/pagina-inicial/aluno"
