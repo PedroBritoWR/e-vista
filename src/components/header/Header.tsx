@@ -1,11 +1,10 @@
 import {
   Home,
-  LineChart,
-  Package,
   Package2,
   PanelLeft,
-  ShoppingCart,
   Users2,
+  LogOut,
+  UserPlus,
 } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
@@ -34,39 +33,32 @@ export default function Header() {
               <span className="sr-only">Acme Inc</span>
             </Link>
             <Link
-              href="#"
+              href="/pagina-inicial"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Home className="h-5 w-5" />
-              Dashboard
+              Página Inicial
             </Link>
             <Link
-              href="#"
+              href="/"
               className="flex items-center gap-4 px-2.5 text-foreground"
             >
-              <ShoppingCart className="h-5 w-5" />
-              Orders
+              <LogOut className="h-5 w-5" />
+              Deslogar
             </Link>
             <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Package className="h-5 w-5" />
-              Products
-            </Link>
-            <Link
-              href="#"
+              href="/pagina-inicial/aluno"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
               <Users2 className="h-5 w-5" />
-              Customers
+              Aluno
             </Link>
             <Link
-              href="#"
+              href="/pagina-inicial/aluno/adicionar-aluno"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
             >
-              <LineChart className="h-5 w-5" />
-              Settings
+              <UserPlus className="h-5 w-5" />
+              Adicionar Aluno
             </Link>
           </nav>
         </SheetContent>

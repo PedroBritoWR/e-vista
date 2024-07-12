@@ -1,5 +1,9 @@
 'use client'
 
 export default function Dashboard() {
-  return <div>aluno</div>
+  return (
+    <>
+      <h1>Aluno</h1>
+    </>
+  )
 }
