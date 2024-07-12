@@ -24,7 +24,7 @@ export default function AvatarUser({
   alt,
 }: AvatarUserProps) {
   return (
-    <>
+    <div className="sm:flex">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -41,15 +41,15 @@ export default function AvatarUser({
             />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+        <DropdownMenuContent align="end" className="grid cursor-pointer gap-2">
+          <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
+          <DropdownMenuSeparator className="border-t" />
+          <DropdownMenuItem>Configurações</DropdownMenuItem>
+          <DropdownMenuItem>Suporte/Atendimento</DropdownMenuItem>
+          <DropdownMenuSeparator className="border-b" />
+          <DropdownMenuItem>Deslogar</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </>
+    </div>
   )
 }

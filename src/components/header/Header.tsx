@@ -1,11 +1,4 @@
-import {
-  Home,
-  Package2,
-  PanelLeft,
-  Users2,
-  LogOut,
-  UserPlus,
-} from 'lucide-react'
+import { Home, PanelLeft, Users2, LogOut, UserPlus } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
 import Link from 'next/link'
@@ -14,24 +7,17 @@ import AvatarUser from './AvatarUser'
 
 export default function Header() {
   return (
-    <header className="sticky top-0 ml-3 flex h-12 items-center justify-between gap-4 border-b pt-2 sm:static sm:h-auto sm:border-0 sm:bg-[#0D1525] sm:px-16">
+    <header className="sticky top-0 flex h-16 items-center justify-between gap-4 border-b bg-background pt-2 sm:static sm:ml-2 sm:w-full sm:border-0 sm:bg-transparent sm:px-8 sm:pl-[81px] sm:pt-0">
       <Breadcrumb />
       <Sheet>
         <SheetTrigger asChild>
-          <Button size="icon" variant="outline" className="sm:hidden">
+          <Button size="icon" variant="outline" className="ml-[18px] sm:hidden">
             <PanelLeft className="h-5 w-5" />
             <span className="sr-only">Toggle Menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="sm:max-w-xs">
           <nav className="grid gap-6 text-lg font-medium">
-            <Link
-              href="#"
-              className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
-            >
-              <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
-              <span className="sr-only">Acme Inc</span>
-            </Link>
             <Link
               href="/pagina-inicial"
               className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
@@ -63,7 +49,7 @@ export default function Header() {
           </nav>
         </SheetContent>
       </Sheet>
-      <AvatarUser src="/" alt="a" width={32} height={32} />
+      <AvatarUser src="/placeholder-user.jpg" alt="" width={32} height={32} />
     </header>
   )
 }

@@ -14,7 +14,7 @@ export default function Breadcrumb() {
   const urlNameFilter = urlName.split('/').filter(Boolean)
 
   return (
-    <BreadcrumbList className="hidden md:block">
+    <BreadcrumbList className="hidden md:flex">
       {urlNameFilter.map((breadCrumb, index) => {
         const href = `/${urlNameFilter.slice(0, index + 1).join('/')}`
         const last = index === urlNameFilter.length - 1
