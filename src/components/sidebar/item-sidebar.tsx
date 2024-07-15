@@ -12,6 +12,7 @@ export type ItemSidebarProps = {
   icon: React.ReactNode
   active?: boolean
 }
+
 export function ItemSidebar({ href, tooltip, icon, active }: ItemSidebarProps) {
   return (
     <TooltipProvider>

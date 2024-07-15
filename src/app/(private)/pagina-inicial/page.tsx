@@ -77,7 +77,7 @@ export default function Dashboard() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Progress value={25} aria-label="25% increase" />=
+                <Progress value={25} aria-label="25% increase" />
               </CardFooter>
             </Card>
             <Card x-chunk="dashboard-05-chunk-2">

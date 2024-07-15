@@ -9,20 +9,9 @@ import {
 } from '@radix-ui/react-dropdown-menu'
 import { Button } from '../ui/button'
 import { DropdownMenuContent } from '../ui/dropdown-menu'
-import Image from 'next/image'
+import { User } from 'lucide-react'
 
-type AvatarUserProps = {
-  src: string
-  width: number
-  height: number
-  alt: string
-}
-export default function AvatarUser({
-  src,
-  width,
-  height,
-  alt,
-}: AvatarUserProps) {
+export default function AvatarUser() {
   return (
     <div className="sm:flex">
       <DropdownMenu>
@@ -32,22 +21,21 @@ export default function AvatarUser({
             size="icon"
             className="overflow-hidden rounded-full"
           >
-            <Image
-              src={src}
-              width={width}
-              height={height}
-              alt={alt}
-              className="overflow-hidden rounded-full"
-            />
+            <User />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="grid cursor-pointer gap-2">
-          <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
+        <DropdownMenuContent
+          align="end"
+          className="grid w-[170px] cursor-pointer gap-2"
+        >
+          <DropdownMenuLabel className="p-2">Minha conta</DropdownMenuLabel>
           <DropdownMenuSeparator className="border-t" />
-          <DropdownMenuItem>Configurações</DropdownMenuItem>
-          <DropdownMenuItem>Suporte/Atendimento</DropdownMenuItem>
+          <div className="grid gap-2 p-2">
+            <DropdownMenuItem>Configurações</DropdownMenuItem>
+            <DropdownMenuItem>Suporte/Atendimento</DropdownMenuItem>
+          </div>
           <DropdownMenuSeparator className="border-b" />
-          <DropdownMenuItem>Sair</DropdownMenuItem>
+          <DropdownMenuItem className="p-2">Sair</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
