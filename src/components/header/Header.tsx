@@ -23,12 +23,12 @@ export default function Header() {
           </SheetTrigger>
           <SheetContent side="left" className="sm:max-w-xs">
             <SheetContent side="left" className="sm:max-w-xs">
-              <nav className="grid gap-6 text-lg font-medium">
+              <nav className="grid gap-2 text-lg font-medium">
                 {itemnsSidebar.map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="flex h-10 items-center justify-start space-x-3 rounded-lg px-3 transition-colors hover:bg-muted"
+                    className="mt-3 flex h-10 items-center justify-start space-x-3 rounded-lg px-3 transition-colors hover:bg-muted"
                   >
                     <div className="flex h-10 w-10 items-center justify-center">
                       {item.icon}

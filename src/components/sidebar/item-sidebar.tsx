@@ -24,7 +24,7 @@ export function ItemSidebar({ href, tooltip, icon, active }: ItemSidebarProps) {
               active
                 ? 'bg-accent text-accent-foreground'
                 : 'text-muted-foreground'
-            } transition-colors hover:text-foreground md:h-8 md:w-8`}
+            } transition-colors hover:text-foreground md:mr-2 md:h-8 md:w-8`}
           >
             {icon}
             <span className="sr-only">{tooltip}</span>

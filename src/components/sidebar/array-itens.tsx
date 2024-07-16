@@ -1,4 +1,4 @@
-import { Home, Users2, UserPlus } from 'lucide-react'
+import { Home, UserPlus, Users2 } from 'lucide-react'
 import { ItemSidebarProps } from './item-sidebar'
 
 export const itemnsSidebar: ItemSidebarProps[] = [
