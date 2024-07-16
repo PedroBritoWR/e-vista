@@ -1,8 +1,8 @@
 'use client'
 import { Settings } from 'lucide-react'
-import { ItemSidebar } from './item-sidebar'
-import { itemnsSidebar } from './array-itens'
 import { usePathname } from 'next/navigation'
+import { itemnsSidebar } from './array-itens'
+import { ItemSidebar } from './item-sidebar'
 
 export function Sidebar() {
   const url = usePathname()

@@ -1,9 +1,10 @@
 import { PanelLeft } from 'lucide-react'
+import Link from 'next/link'
+import { itemnsSidebar } from '../sidebar/array-itens'
 import { Button } from '../ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet'
-import Breadcrumb from './Breadcrumb'
 import AvatarUser from './AvatarUser'
-import { Sidebar } from '../sidebar'
+import Breadcrumb from './Breadcrumb'
 
 export default function Header() {
   return (
@@ -21,9 +22,22 @@ export default function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="sm:max-w-xs">
-            <nav className="grid gap-6 text-lg font-medium">
-              <Sidebar />
-            </nav>
+            <SheetContent side="left" className="sm:max-w-xs">
+              <nav className="grid gap-6 text-lg font-medium">
+                {itemnsSidebar.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex h-10 items-center justify-start space-x-3 rounded-lg px-3 transition-colors hover:bg-muted"
+                  >
+                    <div className="flex h-10 w-10 items-center justify-center">
+                      {item.icon}
+                    </div>
+                    <span>{item.tooltip}</span>
+                  </Link>
+                ))}
+              </nav>
+            </SheetContent>
           </SheetContent>
         </Sheet>
         <Breadcrumb />

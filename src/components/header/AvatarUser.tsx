@@ -32,7 +32,7 @@ export default function AvatarUser() {
           <DropdownMenuSeparator className="border-t" />
           <div className="grid gap-2 p-2">
             <DropdownMenuItem>Configurações</DropdownMenuItem>
-            <DropdownMenuItem>Suporte/Atendimento</DropdownMenuItem>
+            <DropdownMenuItem>Suporte</DropdownMenuItem>
           </div>
           <DropdownMenuSeparator className="border-b" />
           <DropdownMenuItem className="p-2">Sair</DropdownMenuItem>
