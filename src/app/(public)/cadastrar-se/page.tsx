@@ -105,7 +105,7 @@ export default function Login() {
           id="confirmar-senha"
           requiredInput
           type="password"
-          placeholder="*********"
+          placeholder="*******"
           {...register('confirmPassword')}
           error={errors.confirmPassword && errors.confirmPassword.message}
         />
