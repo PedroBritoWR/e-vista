@@ -1,9 +1,13 @@
+'use client'
 import { ThemeProvider } from '@/components/theme-provider'
 import Image from 'next/image'
 import '@/app/styles/globals.css'
+
 type RootLayoutProps = {
   children: React.ReactNode
+  session: never
 }
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-br" suppressHydrationWarning>
