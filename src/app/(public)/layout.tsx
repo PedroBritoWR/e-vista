@@ -1,14 +1,21 @@
-'use client'
 import { ThemeProvider } from '@/components/theme-provider'
 import Image from 'next/image'
 import '@/app/styles/globals.css'
 import NextAuthSessionProvider from '@/providers/sessionProvider'
+import { getServerSession } from 'next-auth'
+import { nextAuthOptions } from '../api/auth/[...nextauth]/route'
+import { redirect } from 'next/navigation'
 
 type RootLayoutProps = {
   children: React.ReactNode
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({ children }: RootLayoutProps) {
+  const session = await getServerSession(nextAuthOptions)
+
+  if (session) {
+    redirect('/pagina-inicial')
+  }
   return (
     <NextAuthSessionProvider>
       <html lang="pt-br" suppressHydrationWarning>

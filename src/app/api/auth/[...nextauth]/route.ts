@@ -40,4 +40,4 @@ const nextAuthOptions: NextAuthOptions = {
 const handler = (req: NextApiRequest, res: NextApiResponse) =>
   NextAuth(req, res, nextAuthOptions)
 
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST, nextAuthOptions }

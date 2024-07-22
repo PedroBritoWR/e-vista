@@ -10,8 +10,18 @@ import {
 import { Button } from '../ui/button'
 import { DropdownMenuContent } from '../ui/dropdown-menu'
 import { User } from 'lucide-react'
+import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export default function AvatarUser() {
+  const router = useRouter()
+  async function logout() {
+    await signOut({
+      redirect: false,
+    })
+
+    router.replace('/')
+  }
   return (
     <div className="sm:flex">
       <DropdownMenu>
@@ -35,7 +45,14 @@ export default function AvatarUser() {
             <DropdownMenuItem>Suporte</DropdownMenuItem>
           </div>
           <DropdownMenuSeparator className="border-b" />
-          <DropdownMenuItem className="p-2">Sair</DropdownMenuItem>
+          <DropdownMenuItem className="p-2">
+            <Button
+              className="text-none bg-transparent hover:bg-transparent"
+              onClick={logout}
+            >
+              Sair
+            </Button>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
