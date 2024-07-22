@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             enableSystem
             disableTransitionOnChange
           >
-            <div className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-screen">
+            <div className="flex h-screen justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2">
               <div className="hidden bg-muted lg:block">
                 <Image
                   src="/placeholder.svg"
