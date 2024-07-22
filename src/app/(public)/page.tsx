@@ -1,20 +1,22 @@
 'use client'
+import React, { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/input'
-import { SyntheticEvent, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Login() {
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-
   const router = useRouter()
+  const [showPassword, setShowPassword] = useState(true)
 
-  async function handleSubmit(event: SyntheticEvent) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log(email, password)
+    const formData = new FormData(event.currentTarget)
+
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     const result = await signIn('credentials', {
       email,
@@ -23,11 +25,14 @@ export default function Login() {
     })
 
     if (result?.error) {
-      console.log(result)
       return
     }
 
     router.replace('/pagina-inicial')
+  }
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
   }
 
   return (
@@ -42,22 +47,30 @@ export default function Login() {
         <Input
           label="Email"
           id="email"
+          name="email"
           type="text"
           placeholder="emilys"
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
         />
         <div className="grid gap-2">
           <Input
             label="Digite sua senha"
             id="senha"
-            type="password"
+            name="password"
+            type={showPassword ? 'password' : 'text'}
             placeholder="emilyspass"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            append={
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="cursor-pointer outline-none focus:outline-none"
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            }
           />
+
           <Link
             href="/recuperar-senha"
             className="ml-auto inline-block w-full text-end text-sm underline"

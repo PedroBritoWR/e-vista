@@ -45,13 +45,8 @@ export default function AvatarUser() {
             <DropdownMenuItem>Suporte</DropdownMenuItem>
           </div>
           <DropdownMenuSeparator className="border-b" />
-          <DropdownMenuItem className="p-2">
-            <Button
-              className="text-none bg-transparent hover:bg-transparent"
-              onClick={logout}
-            >
-              Sair
-            </Button>
+          <DropdownMenuItem className="p-2" onClick={logout}>
+            Sair
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
