@@ -11,6 +11,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
       <head />
+      <Toaster />
       <body suppressHydrationWarning={true}>
         <ThemeProvider
           attribute="class"
@@ -20,7 +21,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         >
           <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   )
