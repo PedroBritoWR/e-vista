@@ -6,12 +6,13 @@ import { Input } from '@/components/input'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Loader } from 'lucide-react'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Login() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(true)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const { toast } = useToast()
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -21,30 +22,27 @@ export default function Login() {
     const password = formData.get('password') as string
 
     setLoading(true)
-    setError(null)
 
-    try {
-      const result = await signIn('credentials', {
-        email,
-        password,
-        redirect: false,
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    })
+
+    if (result?.error) {
+      toast({
+        title: 'Erro de autenticação',
+        description: 'Credenciais inválidas, por favor tente novamente.',
+        variant: 'destructive',
+        duration: 5000,
       })
-
-      if (result?.error) {
-        setError(
-          'Credenciais inválidas. Por favor, verifique seu e-mail e senha.',
-        )
-        return
-      }
-
-      router.replace('/pagina-inicial')
-    } catch (error) {
-      setError(
-        'Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.',
-      )
-    } finally {
       setLoading(false)
+      return
     }
+
+    router.replace('/pagina-inicial')
+
+    setLoading(false)
   }
 
   const togglePasswordVisibility = () => {
@@ -93,11 +91,7 @@ export default function Login() {
             Esqueceu sua senha?
           </Link>
         </div>
-        {error && (
-          <div className="rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
-            {error}
-          </div>
-        )}
+
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? (
             <Loader className="mr-2 inline-block animate-spin" />

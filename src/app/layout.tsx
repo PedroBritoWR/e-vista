@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@/components/theme-provider'
 import './styles/globals.css'
 import NextAuthSessionProvider from '@/providers/sessionProvider'
+import { Toaster } from '@/components/ui/toaster'
 
 type RootLayoutProps = {
   children: React.ReactNode
@@ -19,6 +20,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         >
           <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   )
