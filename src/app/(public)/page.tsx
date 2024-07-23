@@ -5,30 +5,46 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/input'
 import { signIn } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Eye, EyeOff } from 'lucide-react'
+import { Eye, EyeOff, Loader } from 'lucide-react'
 
 export default function Login() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
 
     const email = formData.get('email') as string
     const password = formData.get('password') as string
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    })
+    setLoading(true)
+    setError(null)
 
-    if (result?.error) {
-      return
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setError(
+          'Credenciais inválidas. Por favor, verifique seu e-mail e senha.',
+        )
+        return
+      }
+
+      router.replace('/pagina-inicial')
+    } catch (error) {
+      setError(
+        'Ocorreu um erro ao processar sua solicitação. Tente novamente mais tarde.',
+      )
+    } finally {
+      setLoading(false)
     }
-
-    router.replace('/pagina-inicial')
   }
 
   const togglePasswordVisibility = () => {
@@ -49,7 +65,7 @@ export default function Login() {
           id="email"
           name="email"
           type="text"
-          placeholder="emilys"
+          placeholder="Digite seu email"
           required
         />
         <div className="grid gap-2">
@@ -58,19 +74,18 @@ export default function Login() {
             id="senha"
             name="password"
             type={showPassword ? 'password' : 'text'}
-            placeholder="emilyspass"
+            placeholder="Digite sua senha"
             required
             append={
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="cursor-pointer outline-none focus:outline-none"
+                className="outline-none focus:outline-none"
               >
                 {showPassword ? <EyeOff /> : <Eye />}
               </button>
             }
           />
-
           <Link
             href="/recuperar-senha"
             className="ml-auto inline-block w-full text-end text-sm underline"
@@ -78,8 +93,17 @@ export default function Login() {
             Esqueceu sua senha?
           </Link>
         </div>
-        <Button type="submit" className="w-full">
-          Entrar
+        {error && (
+          <div className="rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
+            {error}
+          </div>
+        )}
+        <Button type="submit" className="w-full" disabled={loading}>
+          {loading ? (
+            <Loader className="mr-2 inline-block animate-spin" />
+          ) : (
+            'Entrar'
+          )}
         </Button>
       </form>
       <div className="mt-4 text-center text-sm">
