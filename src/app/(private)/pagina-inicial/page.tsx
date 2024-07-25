@@ -1,3 +1,4 @@
+'use client'
 import {
   ChevronLeft,
   ChevronRight,
@@ -8,9 +9,6 @@ import {
   MoreVertical,
   Truck,
 } from 'lucide-react'
-
-import { Badge } from '@/components/ui/badge'
-
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -29,13 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from '@/components/ui/pagination'
 import { Progress } from '@/components/ui/progress'
-import { Separator } from '@/components/ui/separator'
 import {
   Table,
   TableBody,
@@ -45,14 +37,74 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useEffect, useState } from 'react'
+import { fetchOrders } from '@/app/api/auth/[...nextauth]/searchFilter'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+} from '@/components/ui/pagination'
+import { Separator } from '@radix-ui/react-dropdown-menu'
+
+interface User {
+  id: number
+  firstName: string
+  lastName: string
+  maidenName: string
+  age: number
+  gender: string
+  email: string
+  phone: string
+  username: string
+  password: string
+  birthDate: string
+  image: string
+  bloodGroup: string
+  height: number
+  weight: number
+  eyeColor: string
+}
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [users, setUsers] = useState<User[]>([])
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      try {
+        const data: User[] = await fetchOrders()
+        console.log('Fetched data:', data)
+        if (Array.isArray(data)) {
+          setUsers(data)
+        } else {
+          setError('Invalid data format')
+        }
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadUsers()
+  }, [])
+
+  if (loading) {
+    return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>
+  }
+
   return (
     <div className="mt-0 flex flex-col px-0 sm:gap-4 sm:py-6 sm:pl-16">
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
         <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
           <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-            <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
+            <Card className="sm:col-span-2">
               <CardHeader className="pb-3">
                 <CardTitle>Your Orders</CardTitle>
                 <CardDescription className="max-w-lg text-balance leading-relaxed">
@@ -64,7 +116,7 @@ export default function Dashboard() {
                 <Button>Create New Order</Button>
               </CardFooter>
             </Card>
-            <Card x-chunk="dashboard-05-chunk-1">
+            <Card>
               <CardHeader className="pb-2">
                 <CardDescription>This Week</CardDescription>
                 <CardTitle className="text-4xl">$1,329</CardTitle>
@@ -78,7 +130,7 @@ export default function Dashboard() {
                 <Progress value={25} aria-label="25% increase" />
               </CardFooter>
             </Card>
-            <Card x-chunk="dashboard-05-chunk-2">
+            <Card>
               <CardHeader className="pb-2">
                 <CardDescription>This Month</CardDescription>
                 <CardTitle className="text-4xl">$5,329</CardTitle>
@@ -137,191 +189,60 @@ export default function Dashboard() {
               </div>
             </div>
             <TabsContent value="week">
-              <Card x-chunk="dashboard-05-chunk-3">
+              <Card>
                 <CardHeader className="px-7">
-                  <CardTitle>Orders</CardTitle>
+                  <CardTitle>Usuários Cadastrados</CardTitle>
                   <CardDescription>
-                    Recent orders from your store.
+                    Usuários recentes cadastrados.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Customer</TableHead>
+                        <TableHead>Nome</TableHead>
                         <TableHead className="hidden sm:table-cell">
-                          Type
+                          Idade
                         </TableHead>
                         <TableHead className="hidden sm:table-cell">
-                          Status
+                          Gênero
                         </TableHead>
                         <TableHead className="hidden md:table-cell">
-                          Date
+                          Data de Nascimento
                         </TableHead>
-                        <TableHead className="text-right">Amount</TableHead>
+                        <TableHead className="text-right">
+                          Cor do Olho
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      <TableRow className="bg-accent">
-                        <TableCell>
-                          <div className="font-medium">Liam Johnson</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            liam@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-23
-                        </TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Olivia Smith</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell className="text-right">$150.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Noah Williams</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            noah@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Subscription
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-25
-                        </TableCell>
-                        <TableCell className="text-right">$350.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Emma Brown</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell className="text-right">$450.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Liam Johnson</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            liam@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-23
-                        </TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Liam Johnson</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            liam@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-23
-                        </TableCell>
-                        <TableCell className="text-right">$250.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Olivia Smith</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            olivia@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Refund
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="outline">
-                            Declined
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-24
-                        </TableCell>
-                        <TableCell className="text-right">$150.00</TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell>
-                          <div className="font-medium">Emma Brown</div>
-                          <div className="hidden text-sm text-muted-foreground md:inline">
-                            emma@example.com
-                          </div>
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          Sale
-                        </TableCell>
-                        <TableCell className="hidden sm:table-cell">
-                          <Badge className="text-xs" variant="secondary">
-                            Fulfilled
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:table-cell">
-                          2023-06-26
-                        </TableCell>
-                        <TableCell className="text-right">$450.00</TableCell>
-                      </TableRow>
+                      {users.length ? (
+                        users.map((user) => (
+                          <TableRow key={user.id}>
+                            <TableCell>
+                              {user.firstName} {user.lastName}
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">
+                              {user.age}
+                            </TableCell>
+                            <TableCell className="hidden sm:table-cell">
+                              {user.gender}
+                            </TableCell>
+                            <TableCell className="hidden md:table-cell">
+                              {user.birthDate}
+                            </TableCell>
+                            <TableCell className="text-right">
+                              {user.eyeColor}
+                            </TableCell>
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={5}>
+                            Nenhum usuário encontrado
+                          </TableCell>
+                        </TableRow>
+                      )}
                     </TableBody>
                   </Table>
                 </CardContent>
