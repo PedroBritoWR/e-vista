@@ -11,8 +11,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-BR">
       <head />
-      <Toaster />
       <body suppressHydrationWarning={true}>
+        <Toaster />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
