@@ -46,7 +46,7 @@ import {
 } from '@/components/ui/pagination'
 import { Separator } from '@radix-ui/react-dropdown-menu'
 
-interface User {
+export interface User {
   id: number
   firstName: string
   lastName: string
