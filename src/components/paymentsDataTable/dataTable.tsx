@@ -118,16 +118,13 @@ export function DataTable<TData, TValue>({
                   <TableHead
                     key={header.id}
                     onClick={header.column.getToggleSortingHandler()}
-                    className={`cursor-pointer ${header.column.getIsSorted() ? 'bg-gray-200' : ''}`}
+                    className={`cursor-pointer ${header.column.getIsSorted() ? 'bg-' : ''}`}
                   >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext(),
                     )}
-                    {{
-                      asc: ' 🔼',
-                      desc: ' 🔽',
-                    }[header.column.getIsSorted() as string] ?? null}
+                    {[header.column.getIsSorted() as string] ?? null}
                   </TableHead>
                 ))}
               </TableRow>

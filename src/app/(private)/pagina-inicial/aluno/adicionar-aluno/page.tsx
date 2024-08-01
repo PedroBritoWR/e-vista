@@ -120,7 +120,7 @@ export default function Dashboard() {
           <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">
             <div className="w-full">
               <Card className="w-full">
-                <div className="container mx-auto py-10">
+                <div className="container mx-auto w-screen py-10">
                   <DataTable columns={columns} data={data} />
                 </div>
               </Card>

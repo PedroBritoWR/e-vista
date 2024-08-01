@@ -71,9 +71,9 @@ export const columns: ColumnDef<Payment>[] = [
     header: () => <div className="text-right">Amount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'))
-      const formatted = new Intl.NumberFormat('en-US', {
+      const formatted = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
-        currency: 'USD',
+        currency: 'BRL',
       }).format(amount)
 
       return <div className="text-right font-medium">{formatted}</div>
