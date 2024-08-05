@@ -111,7 +111,9 @@ export default function Dashboard() {
           <div className="flex justify-end">
             <Button size="sm" className="mr-6">
               <PlusCircle className="mr-2 h-4 w-4" />
-              Adicionar Aluno
+              <Link href="/pagina-inicial/aluno/alunos/cadastrar-aluno">
+                Cadastrar Aluno
+              </Link>
             </Button>
           </div>
           <div className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0">

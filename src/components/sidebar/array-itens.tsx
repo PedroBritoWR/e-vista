@@ -14,8 +14,8 @@ export const itemnsSidebar: ItemSidebarProps[] = [
     icon: <Users2 className="h-5 w-5" />,
   },
   {
-    href: '/pagina-inicial/aluno/adicionar-aluno',
-    tooltip: 'Adicionar Aluno',
+    href: '/pagina-inicial/aluno/alunos',
+    tooltip: 'Alunos',
     icon: <UserPlus className="h-5 w-5" />,
   },
 ]
