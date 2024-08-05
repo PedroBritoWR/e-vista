@@ -1,3 +1,5 @@
+// src/pages/dashboard.tsx
+
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -17,23 +19,13 @@ import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Card } from '@/components/ui/card'
 import { DataTable } from '@/components/paymentsDataTable/dataTable'
-import { columns, Payment } from '@/components/paymentsDataTable/columns'
+import { Payment, columns } from '@/components/paymentsDataTable/columns'
+import { User } from '../../page'
 
-const getData = async (): Promise<Payment[]> => {
-  return [
-    {
-      id: '728ed52f',
-      amount: 100,
-      status: 'pending',
-      email: 'm@example.com',
-    },
-    {
-      id: '728ed52f',
-      amount: 100,
-      status: 'pending',
-      email: 'm@example2.com',
-    },
-  ]
+const getData = async (): Promise<User[]> => {
+  const response = await fetch('https://dummyjson.com/users')
+  const data = await response.json()
+  return data.users // ajuste de acordo com a estrutura de resposta da API
 }
 
 export default function Dashboard() {
@@ -41,10 +33,16 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getData()
-      setData(result)
-    }
+      const users: User[] = await getData()
 
+      const payments: Payment[] = users.map((user) => ({
+        id: user.id.toString(),
+        amount: 100,
+        status: 'pending',
+        email: user.email,
+      }))
+      setData(payments)
+    }
     fetchData()
   }, [])
 

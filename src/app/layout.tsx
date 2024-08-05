@@ -9,9 +9,9 @@ type RootLayoutProps = {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" suppressHydrationWarning>
       <head />
-      <body suppressHydrationWarning={true}>
+      <body>
         <Toaster />
         <ThemeProvider
           attribute="class"

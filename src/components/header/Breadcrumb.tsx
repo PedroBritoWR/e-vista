@@ -20,18 +20,22 @@ export default function Breadcrumb() {
         const last = index === urlNameFilter.length - 1
 
         return (
-          <BreadcrumbItem key={index}>
+          <div key={index}>
             {!last ? (
-              <>
-                <BreadcrumbLink asChild>
-                  <Link href={href}>{breadCrumb}</Link>
-                </BreadcrumbLink>
+              <div className="flex items-center gap-2">
+                <BreadcrumbItem>
+                  <BreadcrumbLink asChild>
+                    <Link href={href}>{breadCrumb}</Link>
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
                 <BreadcrumbSeparator />
-              </>
+              </div>
             ) : (
-              <BreadcrumbPage>{breadCrumb}</BreadcrumbPage>
+              <BreadcrumbItem>
+                <BreadcrumbPage>{breadCrumb}</BreadcrumbPage>
+              </BreadcrumbItem>
             )}
-          </BreadcrumbItem>
+          </div>
         )
       })}
     </BreadcrumbList>
