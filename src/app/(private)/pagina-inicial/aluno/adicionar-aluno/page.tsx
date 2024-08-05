@@ -25,7 +25,7 @@ import { User } from '../../page'
 const getData = async (): Promise<User[]> => {
   const response = await fetch('https://dummyjson.com/users')
   const data = await response.json()
-  return data.users // ajuste de acordo com a estrutura de resposta da API
+  return data.users
 }
 
 export default function Dashboard() {
@@ -37,9 +37,11 @@ export default function Dashboard() {
 
       const payments: Payment[] = users.map((user) => ({
         id: user.id.toString(),
-        amount: 100,
-        status: 'pending',
-        email: user.email,
+        name: user.firstName,
+        age: user.age,
+        gender: user.gender,
+        birthDate: user.birthDate,
+        eyeColor: user.eyeColor,
       }))
       setData(payments)
     }
@@ -47,7 +49,7 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
+    <div className="flex min-h-screen w-full flex-col">
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <Sheet>
@@ -106,10 +108,7 @@ export default function Dashboard() {
           </Sheet>
         </header>
         <main className="space-y-4 px-4 sm:px-6">
-          <div className="flex items-center justify-between">
-            <h1 className="ml-6 text-2xl font-semibold tracking-tight">
-              Alunos
-            </h1>
+          <div className="flex justify-end">
             <Button size="sm" className="mr-6">
               <PlusCircle className="mr-2 h-4 w-4" />
               Adicionar Aluno
@@ -119,6 +118,9 @@ export default function Dashboard() {
             <div className="w-full">
               <Card className="w-full">
                 <div className="container mx-auto w-screen py-10">
+                  <h1 className="text-2xl font-semibold tracking-tight">
+                    Alunos
+                  </h1>
                   <DataTable columns={columns} data={data} />
                 </div>
               </Card>

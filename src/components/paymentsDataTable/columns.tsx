@@ -1,7 +1,5 @@
-'use client'
-
 import { ColumnDef } from '@tanstack/react-table'
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react'
+import { MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -11,14 +9,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 
 export type Payment = {
   id: string
-  amount: number
-  status: 'pending' | 'processing' | 'success' | 'failed'
-  email: string
+  name: string
+  age: number
+  gender: string
+  birthDate: string
+  eyeColor: string
 }
 
 export const columns: ColumnDef<Payment>[] = [
@@ -45,39 +44,29 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => (
-      <Badge variant={row.getValue('status')}>
-        {row.getValue('status').charAt(0).toUpperCase() +
-          row.getValue('status').slice(1)}
-      </Badge>
-    ),
+    accessorKey: 'name',
+    header: 'Nome',
+    filterFn: 'includesString',
   },
   {
-    accessorKey: 'email',
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      >
-        Email
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
+    accessorKey: 'age',
+    header: 'Idade',
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: 'gender',
+    header: 'Gênero',
+  },
+  {
+    accessorKey: 'birthDate',
+    header: 'Data de Nascimento',
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'))
-      const formatted = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(amount)
-
-      return <div className="text-right font-medium">{formatted}</div>
+      const birthDate = new Date(row.getValue('birthDate'))
+      return birthDate.toLocaleDateString('pt-BR')
     },
+  },
+  {
+    accessorKey: 'eyeColor',
+    header: 'Cor dos Olhos',
   },
   {
     id: 'actions',

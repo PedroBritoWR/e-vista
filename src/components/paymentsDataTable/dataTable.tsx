@@ -1,5 +1,3 @@
-'use client'
-
 import * as React from 'react'
 import {
   ColumnDef,
@@ -72,11 +70,11 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filtro..."
-          value={(table.getColumn('email')?.getFilterValue() as string) || ''}
-          onChange={(event) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
-          }
+          placeholder="Filtro"
+          onChange={(event) => {
+            const value = event.target.value
+            table.getColumn('name')?.setFilterValue(value)
+          }}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -101,12 +99,6 @@ export function DataTable<TData, TValue>({
               ))}
           </DropdownMenuContent>
         </DropdownMenu>
-      </div>
-
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getRowModel().rows.length
-          ? `${table.getSelectedRowModel().rows.length} de ${table.getFilteredRowModel().rows.length} itens selecionados.`
-          : 'No rows available.'}
       </div>
 
       <div className="rounded-md border">
@@ -162,6 +154,11 @@ export function DataTable<TData, TValue>({
       </div>
 
       <div className="flex items-center justify-end space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getRowModel().rows.length
+            ? `${table.getSelectedRowModel().rows.length} de ${table.getFilteredRowModel().rows.length} itens selecionados.`
+            : 'No rows available.'}
+        </div>
         <Button
           variant="outline"
           size="sm"
