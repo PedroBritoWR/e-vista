@@ -1,5 +1,6 @@
 'use client'
 import { useState, FormEvent } from 'react'
+import { useRouter } from 'next/navigation'
 import { ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -12,10 +13,19 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
-
 export default function CadastrarAluno() {
   const { toast } = useToast()
+  const router = useRouter() // Para navegação
   const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    age: '',
+    gender: '',
+    birthDate: '',
+    eyeColor: '',
+  })
 
   const createUser = async (user: {
     firstName: string
@@ -62,20 +72,33 @@ export default function CadastrarAluno() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const formData = new FormData(event.currentTarget)
 
     const user = {
-      firstName: formData.get('firstName') as string,
-      lastName: formData.get('lastName') as string,
-      email: formData.get('email') as string,
-      age: parseInt(formData.get('age') as string, 10),
-      gender: formData.get('gender') as string,
-      birthDate: formData.get('birthDate') as string,
-      eyeColor: formData.get('eyeColor') as string,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      age: parseInt(formData.age, 10),
+      gender: formData.gender,
+      birthDate: formData.birthDate,
+      eyeColor: formData.eyeColor,
     }
 
     setLoading(true)
     await createUser(user)
+  }
+
+  const handleDiscard = () => {
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      age: '',
+      gender: '',
+      birthDate: '',
+      eyeColor: '',
+    })
+
+    router.push('/pagina-inicial')
   }
 
   return (
@@ -106,6 +129,10 @@ export default function CadastrarAluno() {
                   type="text"
                   className="w-full"
                   placeholder="Nome do Aluno"
+                  value={formData.firstName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, firstName: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -117,6 +144,10 @@ export default function CadastrarAluno() {
                   type="text"
                   className="w-full"
                   placeholder="Sobrenome do Aluno"
+                  value={formData.lastName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, lastName: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -128,6 +159,10 @@ export default function CadastrarAluno() {
                   type="email"
                   className="w-full"
                   placeholder="Email do Aluno"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -139,6 +174,10 @@ export default function CadastrarAluno() {
                   type="number"
                   className="w-full"
                   placeholder="Idade do Aluno"
+                  value={formData.age}
+                  onChange={(e) =>
+                    setFormData({ ...formData, age: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -150,6 +189,10 @@ export default function CadastrarAluno() {
                   type="text"
                   className="w-full"
                   placeholder="Gênero do Aluno"
+                  value={formData.gender}
+                  onChange={(e) =>
+                    setFormData({ ...formData, gender: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -161,6 +204,10 @@ export default function CadastrarAluno() {
                   type="date"
                   className="w-full"
                   placeholder="Data de Nascimento do Aluno"
+                  value={formData.birthDate}
+                  onChange={(e) =>
+                    setFormData({ ...formData, birthDate: e.target.value })
+                  }
                   required
                 />
               </div>
@@ -172,11 +219,20 @@ export default function CadastrarAluno() {
                   type="text"
                   className="w-full"
                   placeholder="Cor dos Olhos do Aluno"
+                  value={formData.eyeColor}
+                  onChange={(e) =>
+                    setFormData({ ...formData, eyeColor: e.target.value })
+                  }
                   required
                 />
               </div>
               <div className="flex items-center justify-end gap-2 border-t p-4">
-                <Button type="button" variant="outline" size="sm">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleDiscard}
+                >
                   Descartar
                 </Button>
                 <Button type="submit" size="sm" disabled={loading}>
