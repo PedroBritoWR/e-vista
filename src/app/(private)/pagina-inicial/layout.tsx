@@ -16,7 +16,7 @@ export default async function RootLayoutPrivate({ children }: RootLayoutProps) {
   }
 
   return (
-    <>
+    <div className="overflow-x-hidden">
       <Header />
       <div className="flex w-full items-center justify-center">
         <div className="mx-auto grid w-full gap-6">
@@ -26,6 +26,6 @@ export default async function RootLayoutPrivate({ children }: RootLayoutProps) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

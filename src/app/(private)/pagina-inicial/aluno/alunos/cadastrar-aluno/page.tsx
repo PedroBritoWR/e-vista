@@ -104,7 +104,7 @@ export default function CadastrarAluno() {
 
   return (
     <main className="flex min-h-screen w-full items-center justify-center">
-      <div className="w-full max-w-4xl p-4">
+      <div className="w-full max-w-4xl p-4 sm:ml-12 md:ml-12">
         <div className="mb-6 flex items-center gap-4">
           <Button
             variant="outline"
@@ -232,18 +232,20 @@ export default function CadastrarAluno() {
                   required
                 />
               </div>
-              <div className="flex items-center justify-end gap-2 border-t p-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleDiscard}
-                >
-                  Descartar
-                </Button>
-                <Button type="submit" size="sm" disabled={loading}>
-                  {loading ? 'Salvando...' : 'Salvar'}
-                </Button>
+              <div className="flex flex-col items-end gap-2 border-t pt-4">
+                <div className="flex items-center justify-end gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleDiscard}
+                  >
+                    Descartar
+                  </Button>
+                  <Button type="submit" size="sm" disabled={loading}>
+                    {loading ? 'Salvando...' : 'Salvar'}
+                  </Button>
+                </div>
               </div>
             </form>
           </CardContent>
