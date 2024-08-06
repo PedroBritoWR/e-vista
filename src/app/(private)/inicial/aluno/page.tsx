@@ -45,9 +45,7 @@ export default function Dashboard() {
               <h1 className="text-2xl font-semibold tracking-tight">Alunos</h1>
               <Button size="sm" className="ml-6">
                 <PlusCircle className="mr-2 h-4 w-4" />
-                <Link href="/pagina-inicial/aluno/cadastrar-aluno">
-                  Cadastrar Aluno
-                </Link>
+                <Link href="/inicial/aluno/cadastrar">Cadastrar Aluno</Link>
               </Button>
             </div>
             <div className="min-w-full overflow-x-auto">
