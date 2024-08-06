@@ -13,9 +13,10 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
+
 export default function CadastrarAluno() {
   const { toast } = useToast()
-  const router = useRouter() // Para navegação
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     firstName: '',
@@ -105,7 +106,12 @@ export default function CadastrarAluno() {
     <main className="flex min-h-screen w-full items-center justify-center">
       <div className="w-full max-w-4xl p-4">
         <div className="mb-6 flex items-center gap-4">
-          <Button variant="outline" size="icon" className="h-7 w-7">
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-7 w-7"
+            onClick={() => router.back()}
+          >
             <ChevronLeft className="h-4 w-4" />
           </Button>
           <h1 className="flex-1 text-xl font-semibold tracking-tight">
