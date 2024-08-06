@@ -116,7 +116,10 @@ export function DataTable<TData, TValue>({
                       header.column.columnDef.header,
                       header.getContext(),
                     )}
-                    {[header.column.getIsSorted() as string] ?? null}
+                    {{
+                      asc: ' ↑',
+                      desc: ' ↓',
+                    }[header.column.getIsSorted() as string] ?? null}
                   </TableHead>
                 ))}
               </TableRow>
