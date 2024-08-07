@@ -25,7 +25,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import InputMask from 'react-input-mask'
+import MaskedInput from '@/components/inputMask/inputDate'
+import { FormData } from '@/types/input-mask'
 
 const calculateAge = (birthDate: string): number => {
   const today = new Date()
@@ -44,18 +45,35 @@ const calculateAge = (birthDate: string): number => {
   return age
 }
 
-const userSchema = z
+export const userSchema = z
   .object({
     firstName: z.string().min(1, 'Nome é obrigatório'),
     lastName: z.string().min(1, 'Sobrenome é obrigatório'),
     email: z.string().email('Email inválido'),
-    birthDate: z.string().min(1, 'Data de nascimento é obrigatória'),
+    birthDate: z
+      .string()
+      .min(1, 'Data de nascimento é obrigatória')
+      .refine(
+        (value) => {
+          const [day, month, year] = value.split('/').map(Number)
+          const isValidDate = !isNaN(day) && !isNaN(month) && !isNaN(year)
+          return isValidDate
+        },
+        { message: 'Data de nascimento inválido', path: ['birthDate'] },
+      )
+      .refine(
+        (value) => {
+          const age = calculateAge(value)
+          return age >= 6 && age <= 120
+        },
+        { message: 'A idade deve estar entre 6 e 120 anos', path: ['age'] },
+      ),
     gender: z.string().min(1, 'Gênero é obrigatório'),
     eyeColor: z.string().min(1, 'Cor dos olhos é obrigatória'),
     age: z
       .number()
       .min(6, 'A idade deve ser pelo menos 6 anos')
-      .max(20, 'A idade deve ser no máximo 20 anos'),
+      .max(120, 'A idade deve ser no máximo 120 anos'),
   })
   .refine(
     (data) => {
@@ -64,12 +82,10 @@ const userSchema = z
     },
     {
       message:
-        'A idade deve corresponder à data de nascimento e estar entre 6 e 20 anos.',
+        'A idade deve corresponder à data de nascimento e estar entre 6 e 120 anos.',
       path: ['age'],
     },
   )
-
-type FormData = z.infer<typeof userSchema>
 
 export default function CadastrarAluno() {
   const { toast } = useToast()
@@ -85,6 +101,9 @@ export default function CadastrarAluno() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(userSchema),
+    defaultValues: {
+      birthDate: '',
+    },
   })
 
   const createUser = async (user: FormData) => {
@@ -194,27 +213,21 @@ export default function CadastrarAluno() {
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="birthDate">Data de Nascimento</Label>
-                <Controller
+                <MaskedInput
                   control={control}
                   name="birthDate"
-                  render={({ field }) => (
-                    <InputMask
-                      mask="99/99/9999"
-                      placeholder="DD/MM/YYYY"
-                      value={field.value}
-                      onChange={(e) => {
-                        field.onChange(e.target.value)
-                        const birthDate = e.target.value
-                        setValue('birthDate', birthDate)
-                        if (birthDate.length === 10) {
-                          const age = calculateAge(birthDate)
-                          setValue('age', age)
-                        }
-                      }}
-                    >
-                      {(inputProps) => <Input {...inputProps} />}
-                    </InputMask>
-                  )}
+                  mask="99/99/9999"
+                  placeholder="dd/mm/yyyy"
+                  className="w-full"
+                  onChange={(value) => {
+                    console.log(value)
+
+                    setValue('birthDate', value)
+                    if (value.length === 10) {
+                      const age = calculateAge(value)
+                      setValue('age', age)
+                    }
+                  }}
                 />
                 {errors.birthDate && (
                   <p className="text-red-600">{errors.birthDate.message}</p>
@@ -267,10 +280,11 @@ export default function CadastrarAluno() {
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} defaultValue="">
                       <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Cor dos Olhos" />
+                        <SelectValue placeholder="Selecione a Cor dos Olhos" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
+                          <SelectLabel>Cor dos Olhos</SelectLabel>
                           <SelectItem value="castanho">Castanho</SelectItem>
                           <SelectItem value="azul">Azul</SelectItem>
                           <SelectItem value="verde">Verde</SelectItem>
