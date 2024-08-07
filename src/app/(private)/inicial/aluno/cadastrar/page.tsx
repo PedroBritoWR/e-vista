@@ -15,7 +15,7 @@ import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import {
   Select,
   SelectContent,
@@ -25,18 +25,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import InputMask from 'react-input-mask'
 
 const calculateAge = (birthDate: string): number => {
   const today = new Date()
-  const birthDateObj = new Date(birthDate)
+  const [day, month, year] = birthDate.split('/').map(Number)
+  const birthDateObj = new Date(year, month - 1, day)
   let age = today.getFullYear() - birthDateObj.getFullYear()
   const monthDiff = today.getMonth() - birthDateObj.getMonth()
+
   if (
     monthDiff < 0 ||
     (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
   ) {
     age--
   }
+
   return age
 }
 
@@ -45,11 +49,13 @@ const userSchema = z
     firstName: z.string().min(1, 'Nome é obrigatório'),
     lastName: z.string().min(1, 'Sobrenome é obrigatório'),
     email: z.string().email('Email inválido'),
+    birthDate: z.string().min(1, 'Data de nascimento é obrigatória'),
+    gender: z.string().min(1, 'Gênero é obrigatório'),
+    eyeColor: z.string().min(1, 'Cor dos olhos é obrigatória'),
     age: z
       .number()
       .min(6, 'A idade deve ser pelo menos 6 anos')
-      .max(120, 'A idade deve ser no máximo 120 anos'),
-    birthDate: z.string().min(1, 'Data de nascimento é obrigatória'),
+      .max(20, 'A idade deve ser no máximo 20 anos'),
   })
   .refine(
     (data) => {
@@ -57,7 +63,8 @@ const userSchema = z
       return data.age === ageFromBirthDate
     },
     {
-      message: 'A idade deve corresponder à data de nascimento.',
+      message:
+        'A idade deve corresponder à data de nascimento e estar entre 6 e 20 anos.',
       path: ['age'],
     },
   )
@@ -73,6 +80,8 @@ export default function CadastrarAluno() {
     register,
     handleSubmit,
     reset,
+    control,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(userSchema),
@@ -149,7 +158,7 @@ export default function CadastrarAluno() {
                   id="firstName"
                   type="text"
                   className="w-full"
-                  placeholder="Nome do Aluno"
+                  placeholder="Jose Henrique..."
                   {...register('firstName')}
                 />
                 {errors.firstName && (
@@ -162,7 +171,7 @@ export default function CadastrarAluno() {
                   id="lastName"
                   type="text"
                   className="w-full"
-                  placeholder="Sobrenome do Aluno"
+                  placeholder="Silva Sales..."
                   {...register('lastName')}
                 />
                 {errors.lastName && (
@@ -184,6 +193,34 @@ export default function CadastrarAluno() {
                 )}
               </div>
               <div className="grid gap-3">
+                <Label htmlFor="birthDate">Data de Nascimento</Label>
+                <Controller
+                  control={control}
+                  name="birthDate"
+                  render={({ field }) => (
+                    <InputMask
+                      mask="99/99/9999"
+                      placeholder="DD/MM/YYYY"
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e.target.value)
+                        const birthDate = e.target.value
+                        setValue('birthDate', birthDate)
+                        if (birthDate.length === 10) {
+                          const age = calculateAge(birthDate)
+                          setValue('age', age)
+                        }
+                      }}
+                    >
+                      {(inputProps) => <Input {...inputProps} />}
+                    </InputMask>
+                  )}
+                />
+                {errors.birthDate && (
+                  <p className="text-red-600">{errors.birthDate.message}</p>
+                )}
+              </div>
+              <div className="grid gap-3">
                 <Label htmlFor="age">Idade</Label>
                 <Input
                   id="age"
@@ -191,57 +228,63 @@ export default function CadastrarAluno() {
                   className="w-full"
                   placeholder="Idade do Aluno"
                   {...register('age', { valueAsNumber: true })}
+                  readOnly
                 />
                 {errors.age && (
                   <p className="text-red-600">{errors.age.message}</p>
                 )}
               </div>
-              <div className="flex justify-around">
-                <div className="grid gap-3">
-                  <Select>
-                    <SelectTrigger className="w-[350px]">
-                      <SelectValue placeholder="Selcione o Gênero" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectLabel>Gênero</SelectLabel>
-                        <SelectItem value="masculino">Masculino</SelectItem>
-                        <SelectItem value="feminino">Feminino</SelectItem>
-                        <SelectItem value="outros">Outros</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid gap-3">
-                  <Select>
-                    <SelectTrigger className="w-[350px]">
-                      <SelectValue placeholder="Cor dos olhos" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="castanho">Castanho</SelectItem>
-                        <SelectItem value="azul">Azul</SelectItem>
-                        <SelectItem value="verde">Verde</SelectItem>
-                        <SelectItem value="outros">Outros</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
               <div className="grid gap-3">
-                <Label htmlFor="birthDate">Data de Nascimento</Label>
-                <Input
-                  id="birthDate"
-                  type="date"
-                  className="w-full"
-                  placeholder="Data de Nascimento do Aluno"
-                  lang="pt-BR"
-                  {...register('birthDate')}
+                <Label htmlFor="gender">Gênero</Label>
+                <Controller
+                  control={control}
+                  name="gender"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Selecione o Gênero" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Gênero</SelectLabel>
+                          <SelectItem value="masculino">Masculino</SelectItem>
+                          <SelectItem value="feminino">Feminino</SelectItem>
+                          <SelectItem value="outros">Outros</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
                 />
-                {errors.birthDate && (
-                  <p className="text-red-600">{errors.birthDate.message}</p>
+                {errors.gender && (
+                  <p className="text-red-600">{errors.gender.message}</p>
                 )}
               </div>
+              <div className="grid gap-3">
+                <Label htmlFor="eyeColor">Cor dos Olhos</Label>
+                <Controller
+                  control={control}
+                  name="eyeColor"
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} defaultValue="">
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Cor dos Olhos" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="castanho">Castanho</SelectItem>
+                          <SelectItem value="azul">Azul</SelectItem>
+                          <SelectItem value="verde">Verde</SelectItem>
+                          <SelectItem value="outros">Outros</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+                {errors.eyeColor && (
+                  <p className="text-red-600">{errors.eyeColor.message}</p>
+                )}
+              </div>
+
               <div className="flex flex-col items-end gap-2 border-t pt-4">
                 <div className="flex items-center justify-end gap-2">
                   <Button
