@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
       return
     }
 
-    router.replace('/pagina-inicial')
+    router.replace('/inicial')
 
     setLoading(false)
   }

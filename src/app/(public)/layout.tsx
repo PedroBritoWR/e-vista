@@ -12,7 +12,7 @@ export default async function RootLayoutPublic({ children }: RootLayoutProps) {
   const session = await getServerSession(nextAuthOptions)
 
   if (session) {
-    redirect('/pagina-inicial')
+    redirect('/inicial')
   }
   return (
     <div className="flex h-screen justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2">
