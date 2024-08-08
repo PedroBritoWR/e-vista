@@ -15,7 +15,10 @@ export default async function RootLayoutPublic({ children }: RootLayoutProps) {
     redirect('/inicial')
   }
   return (
-    <div className="flex h-screen justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2">
+    <div
+      className="flex h-screen justify-center lg:grid lg:min-h-[600px] lg:grid-cols-2"
+      suppressHydrationWarning
+    >
       <div className="hidden bg-muted lg:block">
         <Image
           src="/placeholder.svg"
