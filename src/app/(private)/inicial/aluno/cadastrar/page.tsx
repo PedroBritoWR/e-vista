@@ -13,7 +13,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, Controller } from 'react-hook-form'
 import {
@@ -27,65 +26,8 @@ import {
 } from '@/components/ui/select'
 import MaskedInput from '@/components/inputMask/inputDate'
 import { FormData } from '@/types/input-mask'
-
-const calculateAge = (birthDate: string): number => {
-  const today = new Date()
-  const [day, month, year] = birthDate.split('/').map(Number)
-  const birthDateObj = new Date(year, month - 1, day)
-  let age = today.getFullYear() - birthDateObj.getFullYear()
-  const monthDiff = today.getMonth() - birthDateObj.getMonth()
-
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDateObj.getDate())
-  ) {
-    age--
-  }
-
-  return age
-}
-
-export const userSchema = z
-  .object({
-    firstName: z.string().min(1, 'Nome é obrigatório'),
-    lastName: z.string().min(1, 'Sobrenome é obrigatório'),
-    email: z.string().email('Email inválido'),
-    birthDate: z
-      .string()
-      .min(1, 'Data de nascimento é obrigatória')
-      .refine(
-        (value) => {
-          const [day, month, year] = value.split('/').map(Number)
-          const isValidDate = !isNaN(day) && !isNaN(month) && !isNaN(year)
-          return isValidDate
-        },
-        { message: 'Data de nascimento inválido', path: ['birthDate'] },
-      )
-      .refine(
-        (value) => {
-          const age = calculateAge(value)
-          return age >= 6 && age <= 120
-        },
-        { message: 'A idade deve estar entre 6 e 120 anos', path: ['age'] },
-      ),
-    gender: z.string().min(1, 'Gênero é obrigatório'),
-    eyeColor: z.string().min(1, 'Cor dos olhos é obrigatória'),
-    age: z
-      .number()
-      .min(6, 'A idade deve ser pelo menos 6 anos')
-      .max(120, 'A idade deve ser no máximo 120 anos'),
-  })
-  .refine(
-    (data) => {
-      const ageFromBirthDate = calculateAge(data.birthDate)
-      return data.age === ageFromBirthDate
-    },
-    {
-      message:
-        'A idade deve corresponder à data de nascimento e estar entre 6 e 120 anos.',
-      path: ['age'],
-    },
-  )
+import { userSchema } from '@/schemas-forms/inputDate-schema'
+import { calculateAge } from '@/functions/calculateAge'
 
 export default function CadastrarAluno() {
   const { toast } = useToast()
@@ -145,7 +87,6 @@ export default function CadastrarAluno() {
     setLoading(true)
     await createUser(data)
   }
-
   return (
     <main className="flex min-h-screen w-full items-center justify-center">
       <div className="w-full max-w-4xl p-4 sm:ml-12 md:ml-12">
@@ -223,9 +164,27 @@ export default function CadastrarAluno() {
                     console.log(value)
 
                     setValue('birthDate', value)
-                    if (value.length === 10) {
+
+                    const [day, month, year] = value.split('/').map(Number)
+                    const isValidDay = day >= 1 && day <= 31
+                    const isValidMonth = month >= 1 && month <= 12
+                    const currentYear = new Date().getFullYear()
+                    const isValidYear =
+                      year <= currentYear && year >= currentYear - 120
+                    const isValidDate =
+                      !isNaN(day) && !isNaN(month) && !isNaN(year)
+
+                    if (
+                      value.length === 10 &&
+                      isValidDate &&
+                      isValidDay &&
+                      isValidMonth &&
+                      isValidYear
+                    ) {
                       const age = calculateAge(value)
                       setValue('age', age)
+                    } else {
+                      setValue('age', '')
                     }
                   }}
                 />
