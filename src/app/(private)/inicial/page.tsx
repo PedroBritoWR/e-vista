@@ -30,29 +30,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useEffect, useState } from 'react'
 import { fetchOrders } from '@/app/api/auth/[...nextauth]/searchFilter'
 import { Separator } from '@radix-ui/react-dropdown-menu'
-
-export interface User {
-  id: number
-  firstName: string
-  lastName: string
-  maidenName: string
-  age: number
-  gender: string
-  email: string
-  phone: string
-  username: string
-  password: string
-  birthDate: string
-  image: string
-  bloodGroup: string
-  height: number
-  weight: number
-  eyeColor: string
-}
+import { useToast } from '@/components/ui/use-toast'
+import { User } from '../../../types/user'
 
 export default function Dashboard() {
+  const { toast } = useToast()
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
   const [users, setUsers] = useState<User[]>([])
   const [selectedUserIndex, setSelectedUserIndex] = useState<number | null>(
     null,
@@ -64,20 +47,33 @@ export default function Dashboard() {
         const data: User[] = await fetchOrders()
         if (Array.isArray(data)) {
           setUsers(data)
-          setSelectedUserIndex(0) // Seleciona o primeiro usuário por padrão
+          setSelectedUserIndex(0)
         } else {
-          setError('Invalid data format')
+          throw new Error('Invalid data format')
         }
       } catch (err) {
         if (err instanceof Error) {
-          setError(err.message)
+          toast({
+            title: 'Erro ao carregar usuários',
+            description: err.message,
+            variant: 'destructive',
+          })
         }
       } finally {
         setLoading(false)
       }
     }
     loadUsers()
-  }, [])
+  }, [toast])
+
+  useEffect(() => {
+    if (loading) {
+      toast({
+        title: 'Carregando',
+        variant: 'default',
+      })
+    }
+  }, [loading, toast])
 
   const handleNextUser = () => {
     if (selectedUserIndex !== null && selectedUserIndex < users.length - 1) {
@@ -89,14 +85,6 @@ export default function Dashboard() {
     if (selectedUserIndex !== null && selectedUserIndex > 0) {
       setSelectedUserIndex(selectedUserIndex - 1)
     }
-  }
-
-  if (loading) {
-    return <p>Loading...</p>
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>
   }
 
   const selectedUser =
