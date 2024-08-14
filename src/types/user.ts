@@ -1,3 +1,6 @@
+import { Address } from './adress'
+import { Bank } from './bank'
+
 export interface User {
   id: number
   firstName: string
@@ -15,4 +18,6 @@ export interface User {
   height: number
   weight: number
   eyeColor: string
+  address: Address
+  bank: Bank
 }

@@ -15,18 +15,20 @@ export const useUserManagement = () => {
     const loadUsers = async () => {
       try {
         const data: User[] = await fetchOrders()
-        if (Array.isArray(data)) {
-          setUsers(data)
-          setSelectedUserIndex(0)
-        } else {
+
+        if (data.length === 0) {
           throw new Error('Invalid data format')
         }
+
+        setUsers(data)
+        setSelectedUserIndex(0)
       } catch (err) {
         if (err instanceof Error) {
           toast({
             title: 'Erro ao carregar usuários',
             description: err.message,
             variant: 'destructive',
+            duration: 5000,
           })
         }
       } finally {
@@ -35,15 +37,6 @@ export const useUserManagement = () => {
     }
     loadUsers()
   }, [toast])
-
-  useEffect(() => {
-    if (loading) {
-      toast({
-        title: 'Carregando',
-        variant: 'default',
-      })
-    }
-  }, [loading, toast])
 
   const handleNextUser = () => {
     if (selectedUserIndex !== null && selectedUserIndex < users.length - 1) {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -7,7 +8,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { User } from '@/types/user'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { Separator } from '@/components/ui/separator'
+import { ChevronLeft, ChevronRight, ChevronDown, ChevronUp } from 'lucide-react'
 
 interface UserDetailsProps {
   selectedUser: User | null
@@ -24,6 +26,10 @@ export const UserDetails = ({
   isFirstUser,
   isLastUser,
 }: UserDetailsProps) => {
+  const [showPersonalInfo, setShowPersonalInfo] = useState(true)
+  const [showAcademicInfo, setShowAcademicInfo] = useState(true)
+  const [showBankInfo, setShowBankInfo] = useState(true)
+
   if (!selectedUser) {
     return (
       <Card>
@@ -41,8 +47,8 @@ export const UserDetails = ({
     <Card className="overflow-hidden">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
-          <CardTitle className="group flex items-center gap-2 text-lg">
-            Detalhe do Aluno
+          <CardTitle className="group flex items-center gap-2">
+            Detalhe do Aluno(a):
           </CardTitle>
           <CardDescription>
             {selectedUser.firstName} {selectedUser.lastName}
@@ -71,18 +77,135 @@ export const UserDetails = ({
           </Button>
         </div>
       </CardHeader>
+
+      <CardContent className="p-6">
+        <h2 className="active flex items-center justify-between text-lg">
+          Informações Pessoais
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setShowPersonalInfo(!showPersonalInfo)}
+          >
+            {showPersonalInfo ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </Button>
+        </h2>
+        {showPersonalInfo && (
+          <ul className="font-semibold">
+            <li>
+              <p className="text-sm text-gray-400">
+                Nome: {selectedUser.firstName} {selectedUser.lastName}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">Idade: {selectedUser.age}</p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Gênero: {selectedUser.gender}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Email: {selectedUser.email}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Telefone: {selectedUser.phone}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Data de Nascimento: {selectedUser.birthDate}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Grupo Sanguíneo: {selectedUser.bloodGroup}
+              </p>
+            </li>
+          </ul>
+        )}
+      </CardContent>
+
+      <Separator className="ml-5 w-[542px]" />
+
       <CardContent className="p-6 text-sm">
-        <ul className="font-semibold">
-          <li>
-            Nome: {selectedUser.firstName} {selectedUser.lastName}
-          </li>
-          <li>Idade: {selectedUser.age}</li>
-          <li>Gênero: {selectedUser.gender}</li>
-          <li>Email: {selectedUser.email}</li>
-          <li>Telefone: {selectedUser.phone}</li>
-          <li>Data de Nascimento: {selectedUser.birthDate}</li>
-          <li>Grupo Sanguíneo: {selectedUser.bloodGroup}</li>
-        </ul>
+        <h2 className="flex items-center justify-between text-lg text-white">
+          Informações acadêmicas e localidade
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setShowAcademicInfo(!showAcademicInfo)}
+          >
+            {showAcademicInfo ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </Button>
+        </h2>
+        {showAcademicInfo && (
+          <ul className="font-semibold">
+            <li>
+              <p className="text-sm text-gray-400">
+                País de origem: {selectedUser.address.country}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Cidade de origem: {selectedUser.address.city}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Estado de origem: {selectedUser.address.state}
+              </p>
+            </li>
+          </ul>
+        )}
+      </CardContent>
+
+      <Separator className="ml-5 w-[542px]" />
+
+      <CardContent className="p-6 text-sm">
+        <h2 className="flex items-center justify-between text-lg text-white">
+          Informações bancarias e financeiras
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setShowBankInfo(!showBankInfo)}
+          >
+            {showBankInfo ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+          </Button>
+        </h2>
+        {showBankInfo && (
+          <ul className="font-semibold">
+            <li>
+              <p className="text-sm text-gray-400">
+                Tipo do cartão: {selectedUser.bank.cardType}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Número do cartão: {selectedUser.bank.cardNumber}
+              </p>
+            </li>
+            <li>
+              <p className="text-sm text-gray-400">
+                Expiração do cartão: {selectedUser.bank.cardExpire}
+              </p>
+            </li>
+          </ul>
+        )}
       </CardContent>
     </Card>
   )

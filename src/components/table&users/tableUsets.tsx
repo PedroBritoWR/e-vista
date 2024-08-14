@@ -20,7 +20,7 @@ export const UserTable = ({
   onRowClick,
 }: UserTableProps) => {
   return (
-    <Table className="bg-[#020711]">
+    <Table className="rounded-md bg-[#020711] p-3">
       <TableHeader>
         <TableRow>
           <TableHead>Nome</TableHead>
