@@ -258,7 +258,7 @@ export default function CadastrarAluno() {
                 )}
               </div>
 
-              <div className="flex flex-col items-end gap-2 border-t pt-4">
+              <div className="flex flex-col items-end gap-2 pt-4">
                 <div className="flex items-center justify-end gap-2">
                   <Button
                     type="button"

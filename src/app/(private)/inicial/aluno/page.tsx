@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { DataTable } from '@/components/paymentsDataTable/dataTable'
 import { Payment, columns } from '@/components/paymentsDataTable/columns'
-import { User } from '../page'
+import { User } from '@/types/user'
 
 const getData = async (): Promise<User[]> => {
   const response = await fetch('https://dummyjson.com/users')
@@ -37,19 +37,17 @@ export default function Dashboard() {
   }, [])
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center space-y-4 px-4 sm:px-6 lg:px-8">
+    <main className="flex min-h-screen w-full flex-col items-center space-y-4 px-4 sm:px-10 lg:px-8">
       <div className="w-full max-w-6xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="my-4 flex justify-end">
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl font-semibold tracking-tight">Alunos</h1>
           <Button size="sm" className="ml-6">
             <PlusCircle className="mr-2 h-4 w-4" />
             <Link href="/inicial/aluno/cadastrar">Cadastrar Aluno</Link>
           </Button>
         </div>
-        <Card className="w-full overflow-x-auto">
+        <Card className="mt-4 w-full overflow-x-auto">
           <div className="w-full px-6 py-4">
-            <div className="flex items-center justify-between pb-4">
-              <h1 className="text-2xl font-semibold tracking-tight">Alunos</h1>
-            </div>
             <div className="min-w-full overflow-x-auto">
               <DataTable columns={columns} data={data} />
             </div>

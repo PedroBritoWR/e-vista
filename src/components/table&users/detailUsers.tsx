@@ -75,36 +75,35 @@ export const UserDetails = ({
       <CardContent className="p-6">
         <h2 className="active text-lg">Informações Pessoais</h2>
         <ul className="font-semibold">
-          <li>
-            <p className="text-sm text-gray-400">
-              Nome: {selectedUser.firstName} {selectedUser.lastName}
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Nome:</h3>
+            <p className="text-white-400 text-sm">
+              {selectedUser.firstName} {selectedUser.lastName}
             </p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">Idade: {selectedUser.age}</p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Idade:</h3>
+            <p className="text-white-400 text-sm"> {selectedUser.age}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Gênero: {selectedUser.gender}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Gênero:</h3>
+            <p className="text-white-400 text-sm">{selectedUser.gender}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">Email: {selectedUser.email}</p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Email:</h3>
+            <p className="text-white-400 text-sm"> {selectedUser.email}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Telefone: {selectedUser.phone}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Telefone</h3>
+            <p className="text-white-400 text-sm">{selectedUser.phone}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Data de Nascimento: {selectedUser.birthDate}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Data de nascimento:</h3>
+            <p className="text-white-400 text-sm">{selectedUser.birthDate}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Grupo Sanguíneo: {selectedUser.bloodGroup}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Grupo sanguineo:</h3>
+            <p className="text-white-400 text-sm">{selectedUser.bloodGroup}</p>
           </li>
         </ul>
       </CardContent>
@@ -112,23 +111,24 @@ export const UserDetails = ({
       <Separator className="ml-5 w-[542px]" />
 
       <CardContent className="p-6 text-sm">
-        <h2 className="text-lg text-white">
-          Informações acadêmicas e localidade
-        </h2>
+        <h2 className="text-lg text-white">Informações de localidade</h2>
         <ul className="font-semibold">
-          <li>
-            <p className="text-sm text-gray-400">
-              País de origem: {selectedUser.address.country}
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">País de origem:</h3>
+            <p className="text-white-400 text-sm">
+              {selectedUser.address.country}
             </p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Cidade de origem: {selectedUser.address.city}
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Cidade de origem:</h3>
+            <p className="text-white-400 text-sm">
+              {selectedUser.address.city}
             </p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Estado de origem: {selectedUser.address.state}
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Estado de origem:</h3>
+            <p className="text-white-400 text-sm">
+              {selectedUser.address.state}
             </p>
           </li>
         </ul>
@@ -140,21 +140,18 @@ export const UserDetails = ({
         <h2 className="text-lg text-white">
           Informações bancarias e financeiras
         </h2>
-        <ul className="font-semibold">
-          <li>
-            <p className="text-sm text-gray-400">
-              Tipo do cartão: {selectedUser.bank.cardType}
-            </p>
+        <ul>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Tipo do cartão:</h3>
+            <p className="text-white-400">{selectedUser.bank.cardType}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Número do cartão: {selectedUser.bank.cardNumber}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Número do cartão:</h3>
+            <p className="text-white-400">{selectedUser.bank.cardNumber}</p>
           </li>
-          <li>
-            <p className="text-sm text-gray-400">
-              Expiração do cartão: {selectedUser.bank.cardExpire}
-            </p>
+          <li className="flex items-center justify-between">
+            <h3 className="text-gray-400">Expiração do cartão:</h3>
+            <p className="text-white-400">{selectedUser.bank.cardExpire}</p>
           </li>
         </ul>
       </CardContent>
